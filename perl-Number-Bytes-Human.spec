@@ -4,13 +4,15 @@
 #
 Name     : perl-Number-Bytes-Human
 Version  : 0.11
-Release  : 10
+Release  : 11
 URL      : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Number-Bytes-Human-0.11.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Number-Bytes-Human-0.11.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libn/libnumber-bytes-human-perl/libnumber-bytes-human-perl_0.11-1.debian.tar.xz
 Summary  : 'Convert byte count to human readable format'
 Group    : Development/Tools
-License  : Artistic-1.0-Perl
+License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
+Requires: perl-Number-Bytes-Human-license = %{version}-%{release}
+Requires: perl-Number-Bytes-Human-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 
 %description
@@ -24,23 +26,42 @@ Number::Bytes::Human 0.11
 Summary: dev components for the perl-Number-Bytes-Human package.
 Group: Development
 Provides: perl-Number-Bytes-Human-devel = %{version}-%{release}
+Requires: perl-Number-Bytes-Human = %{version}-%{release}
 
 %description dev
 dev components for the perl-Number-Bytes-Human package.
 
 
+%package license
+Summary: license components for the perl-Number-Bytes-Human package.
+Group: Default
+
+%description license
+license components for the perl-Number-Bytes-Human package.
+
+
+%package perl
+Summary: perl components for the perl-Number-Bytes-Human package.
+Group: Default
+Requires: perl-Number-Bytes-Human = %{version}-%{release}
+
+%description perl
+perl components for the perl-Number-Bytes-Human package.
+
+
 %prep
 %setup -q -n Number-Bytes-Human-0.11
-cd ..
-%setup -q -T -D -n Number-Bytes-Human-0.11 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/libnumber-bytes-human-perl_0.11-1.debian.tar.xz
+cd %{_builddir}/Number-Bytes-Human-0.11
 mkdir -p deblicense/
-mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Number-Bytes-Human-0.11/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/Number-Bytes-Human-0.11/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
+export LANG=C.UTF-8
 if test -f Makefile.PL; then
 %{__perl} Makefile.PL
 make  %{?_smp_mflags}
@@ -50,7 +71,7 @@ else
 fi
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -58,6 +79,8 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-Number-Bytes-Human
+cp %{_builddir}/Number-Bytes-Human-0.11/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Number-Bytes-Human/305a1881898e71857ed8ca847cf06d88837825e9
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -70,8 +93,15 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/Number/Bytes/Human.pm
 
 %files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/Number::Bytes::Human.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-Number-Bytes-Human/305a1881898e71857ed8ca847cf06d88837825e9
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/Number/Bytes/Human.pm
