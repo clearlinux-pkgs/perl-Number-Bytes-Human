@@ -4,7 +4,7 @@
 #
 Name     : perl-Number-Bytes-Human
 Version  : 0.11
-Release  : 11
+Release  : 12
 URL      : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Number-Bytes-Human-0.11.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Number-Bytes-Human-0.11.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libn/libnumber-bytes-human-perl/libnumber-bytes-human-perl_0.11-1.debian.tar.xz
@@ -80,7 +80,7 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-Number-Bytes-Human
-cp %{_builddir}/Number-Bytes-Human-0.11/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Number-Bytes-Human/305a1881898e71857ed8ca847cf06d88837825e9
+cp %{_builddir}/debian/copyright %{buildroot}/usr/share/package-licenses/perl-Number-Bytes-Human/305a1881898e71857ed8ca847cf06d88837825e9
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -104,4 +104,4 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.1/Number/Bytes/Human.pm
+/usr/lib/perl5/vendor_perl/5.30.2/Number/Bytes/Human.pm
