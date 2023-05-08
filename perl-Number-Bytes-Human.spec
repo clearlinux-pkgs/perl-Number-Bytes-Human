@@ -4,7 +4,7 @@
 #
 Name     : perl-Number-Bytes-Human
 Version  : 0.11
-Release  : 18
+Release  : 19
 URL      : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Number-Bytes-Human-0.11.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Number-Bytes-Human-0.11.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libn/libnumber-bytes-human-perl/libnumber-bytes-human-perl_0.11-1.debian.tar.xz
